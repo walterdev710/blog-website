@@ -49,16 +49,6 @@ def load_user(user_id):
     return db.session.get(User, int(user_id))
 
 
-def admin_only(function):
-    @wraps(function)
-    def wrapper(*args, **kwargs):
-        if current_user.id != 1:
-            return abort(403)
-        return function(*args, **kwargs)
-    return wrapper
-
-
-
 @app.route("/")
 def home_page():
     return render_template("index.html", posts=all_blogs, now=formatted_now, user=current_user)
